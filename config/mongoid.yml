@@ -1,0 +1,20 @@
+development:
+  clients:
+    default:
+      database: zssn_api_development
+      hosts:
+        - localhost:27017
+      options:
+         name
+  options:
+
+test:
+  clients:
+    default:
+      database: zssn_api_test
+      hosts:
+        - localhost:27017
+      options:
+        read:
+          mode: :primary
+        max_pool_size: 1
