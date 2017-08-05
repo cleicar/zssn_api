@@ -5,7 +5,7 @@ development:
       hosts:
         - localhost:27017
       options:
-         name
+
   options:
 
 test:
