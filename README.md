@@ -1,24 +1,19 @@
-# README
+# ZSSN (Zombie Survival Social Network)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ZSSN Is a system created to help the human to survive an apocalypse zombie. Using only REST API requests, survivors can share resources with others non-infected humans.
 
-Things you may want to cover:
+Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit process.
 
-* Ruby version
+## Table of Contents
 
-* System dependencies
+* [Installation](#installation)
+* [How It Works](#how-it-works)
+  * [Add survivors](#add-survivors)
+  * [Update survivor location](#update-survivor-location)
+  * [Flag survivor as infected](#flag-survivor-as-infected)
+  * [Trade items](#trade-items)
+* [Testing with RSpec](#testing-with-rspec)
 
-* Configuration
+## Credits
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- [Cleiviane](https://about.me/cleiviane) (last survivor who knows how to code) 
