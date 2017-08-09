@@ -10,6 +10,8 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 
 require 'rspec/rails'
 
+Dir[Rails.root.join('spec/supports/**/*.rb')].each { |f| require f }
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
@@ -29,4 +31,6 @@ RSpec.configure do |config|
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
+
+  config.include Mongoid::Matchers
 end

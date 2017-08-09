@@ -3,18 +3,20 @@ require 'rails_helper'
 RSpec.describe SurvivorsController, type: :controller do
 
   let(:survivor_params) {
-    {
-      "name"=>"Survivor Test", 
-      "age" => '43',
-      "gender" => 'M',
-      "last_location" => {"latitude": '89809809809', "longitude": '-88983982100'}
-    }
+    FactoryGirl.attributes_for :survivor,
+    resources: [water, food]
   }
 
   let(:invalid_attributes) {
-    {
-      "name"=>"Survivor Test"
-    }
+    FactoryGirl.attributes_for :survivor
+  }
+
+  let(:water){
+    FactoryGirl.attributes_for :resource, :water
+  }
+
+  let(:food){
+    FactoryGirl.attributes_for :resource, :food
   }
 
   describe "Listing survivors" do
@@ -33,7 +35,6 @@ RSpec.describe SurvivorsController, type: :controller do
 
   describe "Adding a survivor" do
     context "with valid params" do
-
       it "should create a new Survivor" do
         expect {
           post :create, params: {survivor: survivor_params}
@@ -53,18 +54,32 @@ RSpec.describe SurvivorsController, type: :controller do
 
         created_survivor = Survivor.last
 
-        created_survivor.attributes.delete("_id")
+        expect(created_survivor.attributes.except("_id", "resources")).to eq survivor_params.except(:resources).with_indifferent_access
+      end
 
-        expect(created_survivor.attributes).to eq survivor_params.with_indifferent_access
+      it "should save survivor's resources" do
+        post :create, params: {survivor: survivor_params}
+
+        expect(json_response[:resources]).to_not be_nil
+        expect(json_response[:resources].size).to eq 2
+        expect(json_response[:resources].first[:type]).to eq "Water"
+        expect(json_response[:resources].second[:type]).to eq "Food"
       end
     end
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new survivor" do
-        post :create, params: {survivor: invalid_attributes}
-        
+        post :create, params: {survivor: invalid_attributes}        
+
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
+        expect(response.content_type).to eq 'application/json'
+      end
+
+      it "should not allow survivor without declare resources" do 
+        post :create, params: {survivor: invalid_attributes}
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to eq 'survivor need to declare its own resources'
       end
     end
   end

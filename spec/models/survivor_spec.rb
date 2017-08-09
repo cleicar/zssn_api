@@ -2,43 +2,21 @@ require 'rails_helper'
 
 RSpec.describe Survivor, type: :model do
 
-	let(:attributes){
-		{
-			"name"=>"Survivor Test", 
-			"age" => '43',
-			"gender" => 'M',
-			"last_location" => {"latitude": '89809809809', "longitude": '-88983982100'}
-		}
-	}
+	describe "Testing survivor's fields" do
+		it { is_expected.to have_fields(:name, :age).of_type(String) }
+		it { is_expected.to have_field(:last_location).of_type(Hash) }
+	
+		it { is_expected.to be_mongoid_document }
 
-	let(:new_survivor){
-		FactoryGirl.create(:survivor)
-	}
-
-	describe "Validating survivor's fields" do 		
-		before do 
-			FactoryGirl.create(:survivor)
-		end
-
-		it "should be a valid survivor" do 
-			expect(new_survivor).to be_valid
-		end
-
-		it "should have all survivor's fields" do
-			created_survivor = Survivor.last
-
-			expect(created_survivor.attributes).to include :name
-			expect(created_survivor.attributes).to include :age
-			expect(created_survivor.attributes).to include :gender
-			expect(created_survivor.attributes).to include :last_location
-
-			created_survivor.attributes.delete("_id")
-
-			expect(created_survivor.attributes).to eq attributes.with_indifferent_access
-		end
+		it { is_expected.to validate_presence_of(:name) }
+		it { is_expected.to validate_presence_of(:age) }
+		it { is_expected.to validate_presence_of(:gender) }
+		it { is_expected.to validate_presence_of(:last_location) }
+		it { is_expected.to validate_presence_of(:resources) }
 	end
 
-	describe "Testing relationships" do
+	describe "Testing relationships" do		
+		it { is_expected.to embed_many :resources }
 	end
 
 end

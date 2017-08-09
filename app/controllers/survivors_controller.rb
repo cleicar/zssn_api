@@ -12,11 +12,20 @@ class SurvivorsController < ApplicationController
   def create
     @survivor = Survivor.new(survivor_params)
 
-    if @survivor.save
-      render json: @survivor, status: :created, location: @survivor
+    if resources_params[:resources].blank?
+      render json: "survivor need to declare its own resources", status: :unprocessable_entity
     else
-      render json: @survivor.errors, status: :unprocessable_entity
-    end
+      
+      resources_params[:resources].each do |resource|
+        @survivor.build_resource(resource)
+      end
+
+      if @survivor.save
+        render json: @survivor, status: :created, location: @survivor
+      else
+        render json: @survivor.errors, status: :unprocessable_entity
+      end
+    end       
   end
 
   private
@@ -26,5 +35,9 @@ class SurvivorsController < ApplicationController
 
     def survivor_params
       params.require(:survivor).permit(:name, :age, :gender, last_location: {})
+    end
+
+    def resources_params
+      params.require(:survivor).permit(resources: [:type, :quantity])
     end
 end
