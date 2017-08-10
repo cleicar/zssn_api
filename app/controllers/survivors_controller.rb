@@ -1,5 +1,5 @@
 class SurvivorsController < ApplicationController
-  before_action :set_survivor, only: [:update]
+  before_action :set_survivor, only: [:update, :flag_infection]
 
   # GET /survivors
   def index
@@ -28,18 +28,30 @@ class SurvivorsController < ApplicationController
     end       
   end
 
-  # PATCH/PUT /books/1
-  # PATCH/PUT /books/1.json
+  # PATCH/PUT /survivors/:id
+  # PATCH/PUT /survivors/:id
   def update
     if update_params.present?
-      @survivor.update(new_location: update_params)
-      json_response(@survivor)
+      @survivor.update_attributes(last_location: {longitude: update_params[:longitude], latitude: update_params[:latitude]})
+      head 204
+    end
+  end
+
+  # POST /survivors/:id/flag_infection
+  def flag_infection
+    @survivor.inc(infection_count: 1)
+
+    if @survivor.infected?
+      render json: { message: "Warning! Infected survivor reported as infected #{@survivor.infection_count} time(s)!" }, status: :ok
+    else
+      render json: { message: "Attention! Survivor was reported as infected #{@survivor.infection_count} time(s)!" },status: :ok
     end
   end
 
   private
     def set_survivor
       @survivor = Survivor.find(params[:id])
+      head 404 if @survivor.blank?
     end
 
     def survivor_params
@@ -51,6 +63,6 @@ class SurvivorsController < ApplicationController
     end
 
     def update_params
-      params.require(:survivor).permit(new_location: {})
+      params.require(:survivor).permit(:longitude, :latitude)
     end
 end

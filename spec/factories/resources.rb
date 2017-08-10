@@ -10,5 +10,15 @@ FactoryGirl.define do
       type "Food"
 			quantity 6
     end		
+
+    trait :medication do
+      type "Medication"
+			quantity 16
+    end		
+
+    trait :ammunition do
+      type "Ammunition"
+			quantity 190
+    end		
 	end
 end

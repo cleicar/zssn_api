@@ -4,6 +4,7 @@ RSpec.describe Survivor, type: :model do
 
 	describe "Testing survivor's fields" do
 		it { is_expected.to have_fields(:name, :age).of_type(String) }
+		it { is_expected.to have_field(:infection_count).of_type(Integer) }
 		it { is_expected.to have_field(:last_location).of_type(Hash) }
 	
 		it { is_expected.to be_mongoid_document }

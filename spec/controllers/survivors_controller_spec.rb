@@ -69,7 +69,7 @@ RSpec.describe SurvivorsController, type: :controller do
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new survivor" do
-        post :create, params: {survivor: invalid_attributes}        
+        post :create, params: {survivor: survivor_params.except(:name)}
 
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq 'application/json'
@@ -95,7 +95,7 @@ RSpec.describe SurvivorsController, type: :controller do
     it "A survivor must be able to update their last location" do
       survivor = Survivor.create! survivor_params
 
-      put :update, params: { id: survivor.to_param, survivor: {new_location: update_params }}
+      put :update, params: { id: survivor.to_param, survivor: update_params }
 
       expect(response.status).to eq(204)
 
@@ -103,6 +103,51 @@ RSpec.describe SurvivorsController, type: :controller do
 
       expect(survivor.last_location[:latitude]).to eq(update_params[:latitude])
       expect(survivor.last_location[:longitude]).to eq(update_params[:longitude])
+    end
+  end
+
+  describe "Flag survivor as infected" do 
+    context 'with a valid survivor' do
+      let(:not_infected_survivor){
+        FactoryGirl.create :survivor, :not_infected, resources: [water, food]
+      }
+
+      let(:almost_infected_survivor){
+        FactoryGirl.create :survivor, :almost_infected, resources: [water, food]
+      }        
+
+      it "should increment the infection counter" do       
+        post :flag_infection, params: { id: not_infected_survivor.to_param }
+
+        expect(response.status).to eq 200
+
+        expect(json_response[:message]).to eq "Attention! Survivor was reported as infected 1 time(s)!"
+
+        not_infected_survivor.reload
+
+        expect(not_infected_survivor.infected?).to eq false
+        expect(not_infected_survivor.infection_count).to eq 1
+      end
+
+      it "if the infection count is 3 should return a infected warning" do 
+        post :flag_infection, params: { id: almost_infected_survivor.to_param }
+
+        expect(response.status).to eq 200
+
+        expect(json_response[:message]).to eq "Warning! Infected survivor reported as infected 3 time(s)!"
+
+        almost_infected_survivor.reload
+
+        expect(almost_infected_survivor.infected?).to eq true
+        expect(almost_infected_survivor.infection_count).to eq 3
+      end      
+    end
+
+    context 'with a invalid survivor' do
+      it 'should returns an not found error' do
+        post :flag_infection, params: { id: 123 }
+        expect(response.status).to eq(404)
+      end
     end
   end
 
