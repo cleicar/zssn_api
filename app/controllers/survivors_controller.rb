@@ -1,5 +1,5 @@
 class SurvivorsController < ApplicationController
-  before_action :set_survivor, only: [:show, :update, :destroy]
+  before_action :set_survivor, only: [:update]
 
   # GET /survivors
   def index
@@ -12,10 +12,10 @@ class SurvivorsController < ApplicationController
   def create
     @survivor = Survivor.new(survivor_params)
 
-    if resources_params[:resources].blank?
+    unless resources_params.has_key?(:resources)
       render json: "survivor need to declare its own resources", status: :unprocessable_entity
     else
-      
+
       resources_params[:resources].each do |resource|
         @survivor.build_resource(resource)
       end
@@ -26,6 +26,15 @@ class SurvivorsController < ApplicationController
         render json: @survivor.errors, status: :unprocessable_entity
       end
     end       
+  end
+
+  # PATCH/PUT /books/1
+  # PATCH/PUT /books/1.json
+  def update
+    if update_params.present?
+      @survivor.update(new_location: update_params)
+      json_response(@survivor)
+    end
   end
 
   private
@@ -39,5 +48,9 @@ class SurvivorsController < ApplicationController
 
     def resources_params
       params.require(:survivor).permit(resources: [:type, :quantity])
+    end
+
+    def update_params
+      params.require(:survivor).permit(new_location: {})
     end
 end

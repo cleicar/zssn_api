@@ -83,4 +83,27 @@ RSpec.describe SurvivorsController, type: :controller do
       end
     end
   end
+
+  describe "Updating survivor's location" do
+    let(:update_params) do 
+      {
+        latitude: '-16.6868824', 
+        longitude: '-49.2647885'
+      }
+    end
+
+    it "A survivor must be able to update their last location" do
+      survivor = Survivor.create! survivor_params
+
+      put :update, params: { id: survivor.to_param, survivor: {new_location: update_params }}
+
+      expect(response.status).to eq(204)
+
+      survivor.reload
+
+      expect(survivor.last_location[:latitude]).to eq(update_params[:latitude])
+      expect(survivor.last_location[:longitude]).to eq(update_params[:longitude])
+    end
+  end
+
 end
