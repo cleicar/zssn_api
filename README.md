@@ -47,10 +47,6 @@ Application will be runing at [localhost:3000](http://localhost:3000).
 
 ##### Request: `GET  /survivors`
 
-```sh
-Content-Type: "application/json"
-```
-
 ##### Response
 
 ```sh
