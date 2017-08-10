@@ -55,10 +55,14 @@ GET  /survivors`
 
 ```sh
 status: 200 Ok
+```
 
+```sh
 Content-Type: "application/json"
+```
 
-Body: 
+```sh
+Body:
 [
     {
         "_id": {
