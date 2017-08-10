@@ -45,17 +45,20 @@ Application will be runing at [localhost:3000](http://localhost:3000).
 
 ### List Survivors
 
-##### Request: `GET  /survivors`
+##### Request 
 
 ```sh
-Content-Type: "application/json"
+GET  /survivors`
 ```
 
 ##### Response
 
 ```sh
 status: 200 Ok
+
 Content-Type: "application/json"
+
+Body: 
 [
     {
         "_id": {
