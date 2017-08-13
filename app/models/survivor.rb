@@ -37,4 +37,8 @@ class Survivor
   scope :infecteds, -> do
     where(:infection_count.gte => 3)
   end
+
+  scope :not_infecteds, -> do
+    where(:infection_count.lt => 3)
+  end
 end

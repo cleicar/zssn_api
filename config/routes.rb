@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resource :reports, only: [] do
   	get 'infected_survivors'
+  	get 'not_infected_survivors'
   end
 
   post :trade_resources, to: 'trades#trade_resources'

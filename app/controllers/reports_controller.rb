@@ -1,9 +1,18 @@
 class ReportsController < ApplicationController
 
-  # GET /infected_survivors
+  # GET /reports/infected_survivors
   def infected_survivors
     if Survivor.exists?
       render json: { data: percentage_of(Survivor.infecteds.count, Survivor.count) }, status: :ok
+    else
+      render json: { error: 'There are no survivors' }, status: :conflict
+    end
+  end
+
+  # GET /reports/not_infected_survivors
+  def not_infected_survivors
+    if Survivor.exists?
+      render json: { data: percentage_of(Survivor.not_infecteds.count, Survivor.count) }, status: :ok
     else
       render json: { error: 'There are no survivors' }, status: :conflict
     end
