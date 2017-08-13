@@ -50,6 +50,15 @@ RSpec.describe TradesController, type: :controller do
       expect(response).to have_http_status(:conflict)
       expect(json_response['error']).to eq('Survivor with id 999 does not exist')
     end
+
+    it 'should not allow trade when a survivor is infected' do
+      survivor_2.update_attribute(:infection_count, 4)
+
+      post :trade_resources, params: trade_params
+
+      expect(response).to have_http_status(:conflict)
+      expect(json_response['error']).to eq('Mary Adams is infected')
+    end
   end
 
 end

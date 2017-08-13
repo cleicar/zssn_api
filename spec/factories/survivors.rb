@@ -7,11 +7,11 @@ FactoryGirl.define do
 		infection_count 0
 
 		factory :survivor_1 do
-			name 'Survivor 1'
+			name 'Jonh Smith'
 		end
 
 		factory :survivor_2 do
-			name 'Survivor 2'
+			name 'Mary Adams'
 			age '21'
 			gender 'F'
 			last_location ({latitude: '-82178299809', longitude: '-12375638001'})

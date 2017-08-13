@@ -27,6 +27,10 @@ class Trade
   		if survivor.blank?
   			raise "Survivor with id #{trade_params[index]['id']} does not exist"
   		end
+
+  		if survivor.infected?
+      	raise "#{survivors[index].name} is infected"
+    	end
   	end
   end
 

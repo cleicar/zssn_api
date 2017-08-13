@@ -8,7 +8,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
 
 * [Installation](#installation)
 * [API Documentation](#api-documentation)
-  *[List Survivors](#list-survivors)
+  * [List Survivors](#list-survivors)
   * [Add survivors](#add-survivors)
   * [Update survivor location](#update-survivor-location)
   * [Flag survivor as infected](#flag-survivor-as-infected)
