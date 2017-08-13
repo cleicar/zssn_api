@@ -30,4 +30,8 @@ FactoryGirl.define do
 	trait :almost_infected do
 		infection_count 2
 	end
+
+	trait :with_resources do
+		resources_attributes [FactoryGirl.attributes_for(:resource, :water, quantity: 6)]
+	end
 end

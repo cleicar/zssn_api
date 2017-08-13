@@ -33,4 +33,8 @@ class Survivor
     survivor_resource = self.resources.find_by(type: resource['type'])
     survivor_resource.present? ? survivor_resource.quantity : 0
   end
+
+  scope :infecteds, -> do
+    where(:infection_count.gte => 3)
+  end
 end

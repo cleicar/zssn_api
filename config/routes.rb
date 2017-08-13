@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   	post :flag_infection, on: :member
   end
 
+  resource :reports, only: [] do
+  	get 'infected_survivors'
+  end
+
   post :trade_resources, to: 'trades#trade_resources'
 
   get '*path' => 'application#index'
