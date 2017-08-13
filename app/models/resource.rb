@@ -12,5 +12,5 @@ class Resource
     "ammunition": 1
   }
 
-  embedded_in :survivor
+  belongs_to :survivor
 end

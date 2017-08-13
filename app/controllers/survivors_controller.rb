@@ -10,25 +10,19 @@ class SurvivorsController < ApplicationController
 
   # POST /survivors
   def create
-    @survivor = Survivor.new(survivor_params)
-
-    unless resources_params.has_key?(:resources)
-      render json: "survivor need to declare its own resources", status: :unprocessable_entity
-    else
-
-      resources_params[:resources].each do |resource|
-        @survivor.build_resource(resource)
-      end
+    if resources_params.has_key?(:resources)
+      @survivor = Survivor.new(survivor_params.merge(resources_attributes: resources_params[:resources]))
 
       if @survivor.save
         render json: @survivor, status: :created, location: @survivor
       else
         render json: @survivor.errors, status: :unprocessable_entity
       end
+    else
+      render json: "survivor need to declare its own resources", status: :unprocessable_entity
     end       
   end
 
-  # PATCH/PUT /survivors/:id
   # PATCH/PUT /survivors/:id
   def update
     if update_params.present?

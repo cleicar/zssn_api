@@ -4,7 +4,7 @@ RSpec.describe TradesController, type: :controller do
 
   let(:survivor_1) {
     FactoryGirl.create :survivor_1,
-    resources: [
+    resources_attributes: [
       FactoryGirl.attributes_for(:resource, :water, quantity: 6),
       FactoryGirl.attributes_for(:resource, :medication, quantity: 3),
     ]
@@ -12,7 +12,7 @@ RSpec.describe TradesController, type: :controller do
 
   let(:survivor_2) {
     FactoryGirl.create :survivor_2,
-    resources: [
+    resources_attributes: [
       FactoryGirl.attributes_for(:resource, :medication, quantity: 7),
       FactoryGirl.attributes_for(:resource, :ammunition, quantity: 10),
     ]
@@ -66,7 +66,7 @@ RSpec.describe TradesController, type: :controller do
       post :trade_resources, params: trade_params, as: :json
 
       expect(response).to have_http_status(:conflict)
-      expect(json_response['error']).to eq("Mary Adams doesn't have enough Ammunition")
+      expect(json_response['error']).to eq("#{survivor_2.name} doesn't have enough resources")
 
       survivor_1.reload
 

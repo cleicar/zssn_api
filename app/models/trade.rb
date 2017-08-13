@@ -36,13 +36,11 @@ class Trade
   end
 
   def validate_resources
-    trade_params.each_with_index do |survivor, index|
-      survivor['resources'].each do |resource|
-        unless survivors[index].resources_count(resource) >= resource['quantity'].to_i
-          raise "#{survivors[index].name} doesn't have enough #{resource['type']}"
-        end
-      end
-    end
+  	survivors.each_with_index do |survivor, index|
+  		unless survivor.has_enough_resources?(trade_params[index]['resources'])
+  			raise "#{survivor.name} doesn't have enough resources"
+  		end
+  	end
   end
 
   def survivors

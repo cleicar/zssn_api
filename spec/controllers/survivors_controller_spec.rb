@@ -21,7 +21,7 @@ RSpec.describe SurvivorsController, type: :controller do
 
   describe "Listing survivors" do
     it "should returns all survivors" do
-      survivor = Survivor.create! survivor_params
+      survivor = FactoryGirl.create(:survivor, resources_attributes: [water])
       
       get :index
 
@@ -60,10 +60,11 @@ RSpec.describe SurvivorsController, type: :controller do
       it "should save survivor's resources" do
         post :create, params: {survivor: survivor_params}
 
-        expect(json_response[:resources]).to_not be_nil
-        expect(json_response[:resources].size).to eq 2
-        expect(json_response[:resources].first[:type]).to eq "Water"
-        expect(json_response[:resources].second[:type]).to eq "Food"
+        resources = Resource.where(survivor_id: json_response[:_id]['$oid'])
+
+        expect(resources).to_not be_nil
+        expect(resources.first[:type]).to eq "Water"
+        expect(resources.second[:type]).to  eq "Food"
       end
     end
 
@@ -93,7 +94,7 @@ RSpec.describe SurvivorsController, type: :controller do
     end
 
     it "A survivor must be able to update their last location" do
-      survivor = Survivor.create! survivor_params
+      survivor = FactoryGirl.create(:survivor, resources_attributes: [water, food])
 
       put :update, params: { id: survivor.to_param, survivor: update_params }
 
@@ -109,11 +110,11 @@ RSpec.describe SurvivorsController, type: :controller do
   describe "Flag survivor as infected" do 
     context 'with a valid survivor' do
       let(:not_infected_survivor){
-        FactoryGirl.create :survivor, :not_infected, resources: [water, food]
+        FactoryGirl.create :survivor, :not_infected, resources_attributes: [water, food]
       }
 
       let(:almost_infected_survivor){
-        FactoryGirl.create :survivor, :almost_infected, resources: [water, food]
+        FactoryGirl.create :survivor, :almost_infected, resources_attributes: [water, food]
       }        
 
       it "should increment the infection counter" do       

@@ -17,7 +17,7 @@ RSpec.describe Survivor, type: :model do
 	end
 
 	describe "Testing relationships" do		
-		it { is_expected.to embed_many :resources }
+		it { is_expected.to have_many :resources }
 	end
 
 end

@@ -3,6 +3,7 @@ class Survivor
 
   INFECTION_MAX = 3
 
+  # Survivor's fields
   field :name, type: String
   field :age, type: String
   field :gender, type: String
@@ -10,16 +11,22 @@ class Survivor
 
   field :infection_count, type: Integer, default: 0
 
-  embeds_many :resources
+  # Relationships
+  has_many :resources
+  accepts_nested_attributes_for :resources
 
+  # Validations
   validates :name, :age, :gender, :last_location, :resources, :presence => true
-
-  def build_resource(resource)
-  	self.resources.build(type: resource[:type], quantity: resource[:quantity])
-  end
 
   def infected?
     infection_count >= INFECTION_MAX
+  end
+
+  def has_enough_resources?(resources)
+    resources.each do |resource|
+      return false if resources_count(resource) < resource['quantity'].to_i
+    end
+    return true
   end
 
   def resources_count(resource)
