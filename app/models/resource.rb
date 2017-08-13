@@ -16,19 +16,7 @@ class Resource
 
   belongs_to :survivor
 
-  scope :water, -> do
-    where(type: 'Water')
-  end
-
-  scope :food, -> do
-    where(type: 'Food')
-  end
-
-  scope :medication, -> do
-    where(type: 'Medication')
-  end
-
-  scope :ammunition, -> do
-    where(type: 'Ammunition')
+  RESOURCES_POINTS.keys.each do |resource_type|
+    scope resource_type, -> { where(type: resource_type.capitalize) }
   end
 end

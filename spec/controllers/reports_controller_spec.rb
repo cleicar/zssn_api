@@ -2,11 +2,6 @@ require 'rails_helper'
 
 RSpec.describe ReportsController, type: :controller do
 
-  let(:water){ FactoryGirl.attributes_for :resource, :water }
-  let(:food) { FactoryGirl.attributes_for :resource, :food }
-  let(:medication){ FactoryGirl.attributes_for :resource, :medication }
-  let(:ammunition){ FactoryGirl.attributes_for :resource, :ammunition }
-
   before do
     create_list(:survivor,  5, :infected, 
       resources_attributes: [
