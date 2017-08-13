@@ -21,4 +21,9 @@ class Survivor
   def infected?
     infection_count >= INFECTION_MAX
   end
+
+  def resources_count(resource)
+    survivor_resource = self.resources.find_by(type: resource['type'])
+    survivor_resource.present? ? survivor_resource.quantity : 0
+  end
 end

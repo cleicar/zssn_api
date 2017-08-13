@@ -59,6 +59,20 @@ RSpec.describe TradesController, type: :controller do
       expect(response).to have_http_status(:conflict)
       expect(json_response['error']).to eq('Mary Adams is infected')
     end
+
+    it 'should not allow trade when a survivor has not enough resources' do 
+      survivor_2.resources.find_by(type: 'Ammunition').update(quantity: 2)
+
+      post :trade_resources, params: trade_params, as: :json
+
+      expect(response).to have_http_status(:conflict)
+      expect(json_response['error']).to eq("Mary Adams doesn't have enough Ammunition")
+
+      survivor_1.reload
+
+      expect(survivor_1.resources.find_by(type: 'Water').quantity).to eq 6
+      expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 3
+    end
   end
 
 end

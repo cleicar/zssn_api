@@ -14,6 +14,7 @@ class Trade
 
   def process  
     validate_survivors
+    validate_resources
   rescue Exception => error
     @status  = :conflict
     @message = error.message
@@ -32,6 +33,16 @@ class Trade
       	raise "#{survivors[index].name} is infected"
     	end
   	end
+  end
+
+  def validate_resources
+    trade_params.each_with_index do |survivor, index|
+      survivor['resources'].each do |resource|
+        unless survivors[index].resources_count(resource) >= resource['quantity'].to_i
+          raise "#{survivors[index].name} doesn't have enough #{resource['type']}"
+        end
+      end
+    end
   end
 
   def survivors
