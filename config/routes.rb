@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   	post :flag_infection, on: :member
   end
 
+  post :trade_resources, to: 'trades#trade_resources'
+
   get '*path' => 'application#index'
   
 end
