@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   	get 'infected_survivors'
   	get 'not_infected_survivors'
     get 'resources_by_survivor'
+    get 'lost_infected_points'
   end
 
   post :trade_resources, to: 'trades#trade_resources'

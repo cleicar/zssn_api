@@ -66,16 +66,23 @@ RSpec.describe ReportsController, type: :controller do
   end
 
   describe "GET #resources_by_survivor" do
-    context 'with valid survivors' do
-      it "should return the not infected survivors percentage" do
-        get :resources_by_survivor
-        
-        expect(response).to have_http_status(:ok)        
-        expect(json_response[:averages][:water]).to eq 2.25
-        expect(json_response[:averages][:food]).to eq 4.0
-        expect(json_response[:averages][:medication]).to eq 6.25
-        expect(json_response[:averages][:ammunition]).to eq 5.25
-      end
+    it "should return the not infected survivors percentage" do
+      get :resources_by_survivor
+      
+      expect(response).to have_http_status(:ok)        
+      expect(json_response[:averages][:water]).to eq 2.25
+      expect(json_response[:averages][:food]).to eq 4.0
+      expect(json_response[:averages][:medication]).to eq 6.25
+      expect(json_response[:averages][:ammunition]).to eq 5.25
+    end
+  end
+
+  describe "GET #lost_infected_points" do
+    it "should return the lost point because of infected survivors" do
+      get :lost_infected_points
+            
+      expect(response).to have_http_status(:ok)        
+      expect(json_response[:lost_points]).to eq 205
     end
   end
 end

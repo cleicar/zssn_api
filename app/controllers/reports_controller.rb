@@ -24,6 +24,16 @@ class ReportsController < ApplicationController
     render json: { averages: averages }, status: :ok
   end
 
+  # GET /reports/lost_infected_points
+  def lost_infected_points
+    infecteds = Survivor.infecteds.pluck(:id)
+    resources = Resource.in(survivor_id: infecteds)
+
+    lost_points = Resource.points_sum(resources) 
+
+    render json: { lost_points: lost_points }, status: :ok
+  end
+
   private
   def check_survivors
     unless Survivor.exists?
