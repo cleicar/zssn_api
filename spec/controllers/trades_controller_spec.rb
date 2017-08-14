@@ -18,7 +18,7 @@ RSpec.describe TradesController, type: :controller do
     ]
   }
 
-  describe "Trade resources between two survivors" do
+  describe "Trade the resources between two survivors" do
     let(:resources_to_trade_survivor_1) {
       [ {type: 'Water', quantity: 1}, {type: 'Medication', quantity: 1} ]
     }
@@ -74,7 +74,7 @@ RSpec.describe TradesController, type: :controller do
       expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 3
     end
 
-    it 'should not allow trade when the resources is not balanced' do 
+    it 'should not allow trade when resources are not balanced' do 
       trade_params[:trade][:survivor_1][:resources][0][:quantity] = 6
 
       post :trade_resources, params: trade_params, as: :json
@@ -86,6 +86,22 @@ RSpec.describe TradesController, type: :controller do
 
       expect(survivor_1.resources.find_by(type: 'Water').quantity).to eq 6
       expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 3
+    end
+
+    it 'should successfully trade resources between two survivors' do
+      post :trade_resources, params: trade_params, as: :json
+
+      expect(response).to have_http_status(:ok)
+
+      expect(json_response['message']).to eq('Trade successfully completed')
+
+      survivor_1.reload
+      survivor_2.reload
+
+      expect(survivor_1.resources.find_by(type: 'Water').quantity).to eq 5
+      expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 2
+
+      expect(survivor_2.resources.find_by(type: 'Ammunition').quantity).to eq 4
     end
   end
 

@@ -34,6 +34,13 @@ class Survivor
     survivor_resource.present? ? survivor_resource.quantity : 0
   end
 
+  def transfer_resource_to(target_survivor, resources)
+    resources.each do |resource, quantity|
+      self.resources.find_by(type: resource['type']).inc(quantity: -resource['quantity'])
+      target_survivor.resources.find_or_create_by(type: resource['type']).inc(quantity: -resource['quantity'])
+    end
+  end
+
   scope :infecteds, -> do
     where(:infection_count.gte => 3)
   end
