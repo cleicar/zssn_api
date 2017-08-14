@@ -15,6 +15,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [Trade Resources](#trade-resources)
 * [Reports](#reports)
   * [Percentage of infected survivors](#percentage-of-infected-survivors)
+  * [Percentage of non-infected survivors](#percentage-of-non-infected-survivors)
 * [Testing with RSpec](#testing-with-rspec)
 * [Credits](#credits)
 
@@ -305,6 +306,31 @@ Status | Error                | Message
 
 ```sh
 GET   /reports/infected_survivors
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "data": "X%"
+}
+```
+
+### Percentage of non-infected survivors
+
+##### Request 
+
+```sh
+GET   /reports/not_infected_survivors
 ```
 
 ##### Response
