@@ -12,7 +12,7 @@ class Resource
     food: 3,
     medication: 2,
     ammunition: 1
-  }
+  }.with_indifferent_access
 
   belongs_to :survivor
 

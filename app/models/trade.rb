@@ -15,6 +15,7 @@ class Trade
   def process  
     validate_survivors
     validate_resources
+    validate_balance
   rescue Exception => error
     @status  = :conflict
     @message = error.message
@@ -41,6 +42,21 @@ class Trade
   			raise "#{survivor.name} doesn't have enough resources"
   		end
   	end
+  end
+
+  def validate_balance
+    survivor_1_points = points_sum(trade_params[0]['resources']) 
+    survivor_2_points = points_sum(trade_params[1]['resources'])
+
+    if survivor_1_points != survivor_2_points
+      raise "Resources points is not balanced both sides"
+    end
+  end
+
+  def points_sum(survivor_resources)
+    survivor_resources.sum { |resource| 
+      resource['quantity'].to_i * Resource::RESOURCES_POINTS[resource['type'].downcase]
+    }
   end
 
   def survivors

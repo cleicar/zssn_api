@@ -73,6 +73,20 @@ RSpec.describe TradesController, type: :controller do
       expect(survivor_1.resources.find_by(type: 'Water').quantity).to eq 6
       expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 3
     end
+
+    it 'should not allow trade when the resources is not balanced' do 
+      trade_params[:trade][:survivor_1][:resources][0][:quantity] = 6
+
+      post :trade_resources, params: trade_params, as: :json
+
+      expect(response).to have_http_status(:conflict)
+      expect(json_response['error']).to eq('Resources points is not balanced both sides')
+
+      survivor_1.reload
+
+      expect(survivor_1.resources.find_by(type: 'Water').quantity).to eq 6
+      expect(survivor_1.resources.find_by(type: 'Medication').quantity).to eq 3
+    end
   end
 
 end
