@@ -9,7 +9,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
 * [Installation](#installation)
 * [API Documentation](#api-documentation)
   * [List Survivors](#list-survivors)
-  * [Add survivors](#add-survivors)
+  * [Add Survivors](#add-survivors)
   * [Update survivor location](#update-survivor-location)
   * [Flag survivor as infected](#flag-survivor-as-infected)
   * [Trade items](#trade-items)
@@ -95,6 +95,66 @@ Body:
         ]
     }
 ]
+```
+
+### Add Survivors
+
+##### Request 
+
+```sh
+POST  /survivors`
+```
+
+```sh
+Parameters:
+{
+    "survivor": 
+    {
+        "name": "Survivor Test", 
+        "age": "43", 
+        "gender": "M", 
+        "last_location": {"latitude": "89809809809", "longitude": "-88983982100"},
+        "resources": [
+        {
+            "type": "Water", 
+            "quantity": 10
+            
+        }, 
+        { 
+            "type":"Food", 
+            "quantity": 6
+            
+        }
+    ]
+    }
+}
+```
+
+##### Response
+
+```sh
+status: 200 Ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "_id": {
+        "$oid": "5990f7357b6ee2652e9e581a"
+    },
+    "age": "43",
+    "gender": "M",
+    "infection_count": 0,
+    "last_location": {
+        "latitude": "89809809809",
+        "longitude": "-88983982100"
+    },
+    "name": "Survivor Test"
+}
 ```
 
 ## Credits
