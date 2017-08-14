@@ -79,7 +79,7 @@ RSpec.describe SurvivorsController, type: :controller do
       it "should not allow survivor without declare resources" do 
         post :create, params: {survivor: invalid_attributes}
 
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:conflict)
         expect(response.body).to eq 'survivor need to declare its own resources'
       end
     end

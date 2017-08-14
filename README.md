@@ -133,7 +133,7 @@ Parameters:
 ##### Response
 
 ```sh
-status: 200 Ok
+status: 201 created
 ```
 
 ```sh
@@ -156,6 +156,13 @@ Body:
     "name": "Survivor Test"
 }
 ```
+
+##### Errors
+Status | Error                | Message
+------ | ---------------------|--------
+422    | Unprocessable Entity |   
+409    | Conflict             | survivor need to declare its own resources
+
 
 ## Credits
 

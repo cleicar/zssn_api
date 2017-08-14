@@ -19,7 +19,7 @@ class SurvivorsController < ApplicationController
         render json: @survivor.errors, status: :unprocessable_entity
       end
     else
-      render json: "survivor need to declare its own resources", status: :unprocessable_entity
+      render json: "survivor need to declare its own resources", status: :conflict
     end       
   end
 
