@@ -128,7 +128,7 @@ RSpec.describe SurvivorsController, type: :controller do
       it "should increment the infection counter" do       
         post :flag_infection, params: { id: not_infected_survivor.to_param }
 
-        expect(response.status).to eq 200
+        expect(response).to have_http_status(:ok)
 
         expect(json_response[:message]).to eq "Attention! Survivor was reported as infected 1 time(s)!"
 
@@ -141,7 +141,7 @@ RSpec.describe SurvivorsController, type: :controller do
       it "if the infection count is 3 should return a infected warning" do 
         post :flag_infection, params: { id: almost_infected_survivor.to_param }
 
-        expect(response.status).to eq 200
+        expect(response).to have_http_status(:ok)
 
         expect(json_response[:message]).to eq "Warning! Infected survivor reported as infected 3 time(s)!"
 

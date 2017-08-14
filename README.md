@@ -11,7 +11,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [List Survivors](#list-survivors)
   * [Add Survivors](#add-survivors)
   * [Update Survivor Location](#update-survivor-location)
-  * [Flag survivor as infected](#flag-survivor-as-infected)
+  * [Flag Survivor as Infected](#flag-survivor-as-infected)
   * [Trade items](#trade-items)
 * [Testing with RSpec](#testing-with-rspec)
 
@@ -196,6 +196,36 @@ Status | Error      |
 ------ | -----------|
 404    | Not Found  |
 
+### Flag Survivor as Infected
+
+##### Request 
+
+```sh
+POST   /survivors/:id/flag_infection
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "message": "Attention! Survivor was reported as infected x time(s)!"
+    "message": "Warning! Survivor was reported as infected x time(s)"
+}
+```
+
+##### Errors
+Status | Error      |
+------ | -----------|
+404    | Not Found  |
 
 
 ## Credits
