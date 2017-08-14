@@ -16,6 +16,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
 * [Reports](#reports)
   * [Percentage of infected survivors](#percentage-of-infected-survivors)
   * [Percentage of non-infected survivors](#percentage-of-non-infected-survivors)
+  * [Average Resources By Survivor](#average-resources-by-survivor)
 * [Testing with RSpec](#testing-with-rspec)
 * [Credits](#credits)
 
@@ -347,6 +348,36 @@ Content-Type: "application/json"
 Body:
 {
     "data": "X%"
+}
+```
+
+### Average Resources By Survivor
+
+##### Request 
+
+```sh
+GET   /reports/resources_by_survivor
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "averages": {
+        "water": 5,
+        "food": 7,
+        "medication": 1.5,
+        "ammunition": 0
+    }
 }
 ```
 
