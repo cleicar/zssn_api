@@ -10,7 +10,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
 * [API Documentation](#api-documentation)
   * [List Survivors](#list-survivors)
   * [Add Survivors](#add-survivors)
-  * [Update survivor location](#update-survivor-location)
+  * [Update Survivor Location](#update-survivor-location)
   * [Flag survivor as infected](#flag-survivor-as-infected)
   * [Trade items](#trade-items)
 * [Testing with RSpec](#testing-with-rspec)
@@ -124,8 +124,7 @@ Parameters:
             "type":"Food", 
             "quantity": 6
             
-        }
-    ]
+        }]
     }
 }
 ```
@@ -162,6 +161,41 @@ Status | Error                | Message
 ------ | ---------------------|--------
 422    | Unprocessable Entity |   
 409    | Conflict             | survivor need to declare its own resources
+
+### Update Survivor Location
+
+##### Request 
+
+```sh
+PATCH/PUT /survivors/:id
+```
+
+```sh
+Parameters:
+{
+    "survivor": 
+    {
+        "latitude": "-16.6868824", 
+        "longitude": "-49.2647885"
+    }
+}
+```
+
+##### Response
+
+```sh
+status: 204 no_content
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+##### Errors
+Status | Error      |
+------ | -----------|
+404    | Not Found  |
+
 
 
 ## Credits

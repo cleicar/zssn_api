@@ -27,7 +27,7 @@ class SurvivorsController < ApplicationController
   def update
     if update_params.present?
       @survivor.update_attributes(last_location: {longitude: update_params[:longitude], latitude: update_params[:latitude]})
-      head 204
+      head :no_content
     end
   end
 
@@ -45,7 +45,7 @@ class SurvivorsController < ApplicationController
   private
     def set_survivor
       @survivor = Survivor.find(params[:id])
-      head 404 if @survivor.blank?
+      head :not_found if @survivor.blank?
     end
 
     def survivor_params

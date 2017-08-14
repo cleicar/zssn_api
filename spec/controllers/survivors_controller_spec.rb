@@ -98,12 +98,20 @@ RSpec.describe SurvivorsController, type: :controller do
 
       put :update, params: { id: survivor.to_param, survivor: update_params }
 
-      expect(response.status).to eq(204)
+      expect(response).to have_http_status(:no_content)
 
       survivor.reload
 
       expect(survivor.last_location[:latitude]).to eq(update_params[:latitude])
       expect(survivor.last_location[:longitude]).to eq(update_params[:longitude])
+    end
+
+    it "should return error status if survivor does not exist" do 
+      survivor = FactoryGirl.create(:survivor, resources_attributes: [water, food])
+
+      put :update, params: { id: '999', survivor: update_params }
+
+      expect(response).to have_http_status(:not_found)
     end
   end
 
