@@ -14,6 +14,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [Flag Survivor as Infected](#flag-survivor-as-infected)
   * [Trade Resources](#trade-resources)
 * [Testing with RSpec](#testing-with-rspec)
+* [Credits](#credits)
 
 ## Installation
 
@@ -292,6 +293,18 @@ Status | Error                | Message
 409    | Conflict             | Survivor X is infected
 409    | Conflict             | Survivor X doesn't have enough resources
 409    | Conflict             | Resources points is not balanced both sides
+
+## Testing with RSpec
+
+The project was build with TDD (Test Driven Development). To execute the tests just run the tests with RSpec.
+
+1. Execute all tests
+
+    ~~~ sh
+    $ bundle exec rspec
+    ~~~
+
+To see the test cover percent open the file `coverage/index.html` at your browser.
 
 ## Credits
 
