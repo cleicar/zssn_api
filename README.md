@@ -13,6 +13,8 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [Update Survivor Location](#update-survivor-location)
   * [Flag Survivor as Infected](#flag-survivor-as-infected)
   * [Trade Resources](#trade-resources)
+* [Reports](#reports)
+  * [Percentage of infected survivors](#percentage-of-infected-survivors)
 * [Testing with RSpec](#testing-with-rspec)
 * [Credits](#credits)
 
@@ -293,6 +295,34 @@ Status | Error                | Message
 409    | Conflict             | Survivor X is infected
 409    | Conflict             | Survivor X doesn't have enough resources
 409    | Conflict             | Resources points is not balanced both sides
+
+
+## Reports
+
+### Percentage of infected survivors
+
+##### Request 
+
+```sh
+GET   /reports/infected_survivors
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "data": "X%"
+}
+```
 
 ## Testing with RSpec
 
