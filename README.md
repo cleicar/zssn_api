@@ -17,6 +17,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [Percentage of infected survivors](#percentage-of-infected-survivors)
   * [Percentage of non-infected survivors](#percentage-of-non-infected-survivors)
   * [Average Resources By Survivor](#average-resources-by-survivor)
+  * [Points lost because of infected survivors](#points-lost-because-of-infected-survivors)
 * [Testing with RSpec](#testing-with-rspec)
 * [Credits](#credits)
 
@@ -378,6 +379,31 @@ Body:
         "medication": 1.5,
         "ammunition": 0
     }
+}
+```
+
+### Points lost because of infected survivors
+
+##### Request 
+
+```sh
+GET   /reports/lost_infected_points
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "lost_points": 30
 }
 ```
 
