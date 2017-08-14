@@ -12,7 +12,7 @@ Project created as part of [Codeminer 42](http://www.codeminer42.com/) recruit p
   * [Add Survivors](#add-survivors)
   * [Update Survivor Location](#update-survivor-location)
   * [Flag Survivor as Infected](#flag-survivor-as-infected)
-  * [Trade items](#trade-items)
+  * [Trade Resources](#trade-resources)
 * [Testing with RSpec](#testing-with-rspec)
 
 ## Installation
@@ -227,6 +227,71 @@ Status | Error      |
 ------ | -----------|
 404    | Not Found  |
 
+
+### Trade Resources
+
+Survivors can trade items among themselves, respecting a price table.
+
+##### Request 
+
+```sh
+POST   /trade_resources
+```
+
+```sh
+Parameters:
+{
+  "trade": {
+    "survivor_1": {
+      "id": "5991814f2a43166a43c27b48",
+      "resources": [
+        {
+          "type": "Water",
+          "quantity": 1
+        },
+        {
+          "type": "Medication",
+          "quantity": 1
+        }
+      ]
+    },
+    "survivor_2": {
+      "id": "5991814f2a43166a43c27b4b",
+      "resources": [
+        {
+          "type": "Ammunition",
+          "quantity": 6
+        }
+      ]
+    }
+  }
+}
+```
+
+##### Response
+
+```sh
+status: 200 ok
+```
+
+```sh
+Content-Type: "application/json"
+```
+
+```sh
+Body:
+{
+    "message": "Trade successfully completed"
+}
+```
+
+##### Errors
+Status | Error                | Message
+------ | ---------------------|--------
+404    | Not Found            | Survivor with id xxxxx does not exist 
+409    | Conflict             | Survivor X is infected
+409    | Conflict             | Survivor X doesn't have enough resources
+409    | Conflict             | Resources points is not balanced both sides
 
 ## Credits
 
